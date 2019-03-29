@@ -3,10 +3,12 @@ console.log(port);
 process.env.node_env = process.env.node_env || "dev";
 
 let URLDB;
+// if ((process.env.node_env === "dev")) {
+
 if ((process.env.node_env = !"dev")) {
     URLDB = "mongodb://localhost:27017/coffee";
 } else {
-    URLDB = "mongodb+srv://merten:Guada2452@cluster0-oirh4.mongodb.net/test?retryWrites=true";
+    URLDB = process.env.MONGO_URI;
 }
 
 process.env.URLDB = URLDB;
