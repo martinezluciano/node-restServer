@@ -1,6 +1,6 @@
 const port = process.env.PORT || 3000;
 
-process.env.node_env = process.env.node_env || "dev";
+// process.env.node_env = process.env.node_env || "dev";
 
 let URLDB;
 
