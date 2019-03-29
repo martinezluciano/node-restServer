@@ -10,7 +10,7 @@ app.get("/usuario", function(req, res) {
     from = Number(from);
     limit = Number(limit);
 
-    User.find({ estado: false }, "name email role estado google img") // " permite excluir campos"
+    User.find({ estado: true }, "name email role estado google img") // " permite excluir campos"
         .skip(from)
         .limit(limit)
         .exec((err, users) => {
@@ -18,7 +18,7 @@ app.get("/usuario", function(req, res) {
                 return res.status(400).json({ ok: false, err });
             }
 
-            User.count({ estado: false }, (err, count) => {
+            User.count({ estado: true }, (err, count) => {
                 if (err) {
                     return res.status(400).json({ ok: false, err });
                 }
