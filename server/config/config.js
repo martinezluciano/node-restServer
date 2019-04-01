@@ -1,6 +1,6 @@
 const port = process.env.PORT || 3000;
 
-// process.env.node_env = process.env.node_env || "dev";
+process.env.node_env = process.env.node_env || "dev";
 
 let URLDB;
 
@@ -10,4 +10,9 @@ if (process.env.node_env === "dev") {
     URLDB = process.env.MONGO_URI;
 }
 process.env.URLDB = URLDB;
+
+process.env.tokenExpire = 60 * 60 * 24 * 30;
+
+process.env.seed = process.env.seed || "seed-Desarrollo";
+
 module.exports = port;

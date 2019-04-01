@@ -3,14 +3,15 @@ const app = express();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const _ = require("underscore");
+const { checkToken, verifyToken } = require("../middlewares/authentification"); // pq usa {} ?
 
-app.get("/usuario", function(req, res) {
+app.get("/usuario", checkToken, (req, res) => {
     let from = req.query.from || 0;
     let limit = req.query.limit || 5;
     from = Number(from);
     limit = Number(limit);
 
-    User.find({ estado: true }, "name email role estado google img") // " permite excluir campos"
+    User.find({}, "name email role estado google img") // " permite select campos"
         .skip(from)
         .limit(limit)
         .exec((err, users) => {
@@ -18,7 +19,7 @@ app.get("/usuario", function(req, res) {
                 return res.status(400).json({ ok: false, err });
             }
 
-            User.count({ estado: true }, (err, count) => {
+            User.count({ google: true }, (err, count) => {
                 if (err) {
                     return res.status(400).json({ ok: false, err });
                 }
@@ -27,7 +28,7 @@ app.get("/usuario", function(req, res) {
         });
 });
 
-app.post("/usuario", function(req, res) {
+app.post("/usuario", checkToken, function(req, res) {
     let body = req.body;
     let user = new User({
         name: body.name,
@@ -50,7 +51,7 @@ app.post("/usuario", function(req, res) {
     });
 });
 
-app.put("/usuario/:id", function(req, res) {
+app.put("/usuario/:id", [checkToken, verifyToken], function(req, res) {
     let id = req.params.id;
     let body = _.pick(req.body, ["nombre", "email", "img", "role"]);
     User.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, userDB) => {
@@ -65,7 +66,7 @@ app.put("/usuario/:id", function(req, res) {
     });
 });
 
-app.delete("/usuario/:id", function(req, res) {
+app.delete("/usuario/:id", [checkToken, verifyToken], function(req, res) {
     let id = req.params.id;
     let changeEstado = { estado: false };
     User.findByIdAndUpdate(id, changeEstado, { new: true }, (err, usuario) => {
