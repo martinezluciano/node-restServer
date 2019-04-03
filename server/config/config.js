@@ -15,4 +15,11 @@ process.env.tokenExpire = 60 * 60 * 24 * 30;
 
 process.env.seed = process.env.seed || "seed-Desarrollo";
 
+// =================================
+//    Google Client ID
+// =================================
+process.env.CLIENT_ID =
+    process.env.CLIENT_ID ||
+    "595401273747-rnaar1gjb993uk1auqv2cp2celj0brrt.apps.googleusercontent.com";
+
 module.exports = port;

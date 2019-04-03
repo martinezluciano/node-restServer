@@ -19,7 +19,7 @@ app.get("/usuario", checkToken, (req, res) => {
                 return res.status(400).json({ ok: false, err });
             }
 
-            User.count({ google: true }, (err, count) => {
+            User.count({}, (err, count) => {
                 if (err) {
                     return res.status(400).json({ ok: false, err });
                 }
