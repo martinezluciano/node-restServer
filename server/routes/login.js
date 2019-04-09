@@ -9,7 +9,7 @@ const client = new OAuth2Client(process.env.CLIEND_ID);
 app.post("/login", (req, res) => {
     let body = req.body;
 
-    User.findOne({ email: body.email }, (err, userBD) => {
+    User.findOne({ email: body.username }, (err, userBD) => {
         if (err) {
             return res.json({ ok: false, message: err });
         }
@@ -49,8 +49,8 @@ async function verify(token) {
     });
     const payload = ticket.getPayload();
     return {
-        nombre: payload.name,
-        email: payload.email,
+        email: payload.name,
+        user: payload.email,
         img: payload.picture,
         google: true
     };

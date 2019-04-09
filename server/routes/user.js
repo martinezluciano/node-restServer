@@ -5,13 +5,13 @@ const bcrypt = require("bcrypt");
 const _ = require("underscore");
 const { checkToken, verifyToken } = require("../middlewares/authentification"); // pq usa {} ?
 
-app.get("/usuario", checkToken, (req, res) => {
+app.get("/usuario", (req, res) => {
     let from = req.query.from || 0;
-    let limit = req.query.limit || 5;
+    let limit = req.query.limit || 200;
     from = Number(from);
     limit = Number(limit);
 
-    User.find({}, "name email role estado google img") // " permite select campos"
+    User.find({}, "id username password nombre apelllido email telefono estado") // " permite select campos"
         .skip(from)
         .limit(limit)
         .exec((err, users) => {
@@ -28,11 +28,16 @@ app.get("/usuario", checkToken, (req, res) => {
         });
 });
 
-app.post("/usuario", checkToken, function(req, res) {
+app.post("/usuario", function(req, res) {
     let body = req.body;
     let user = new User({
-        name: body.name,
+        nombre: body.nombre,
+        apelllido: body.apelllido,
+        telefono: body.telefono,
         email: body.email,
+        id: body.id,
+        username: body.username,
+        estado: true,
         password: bcrypt.hashSync(body.password, 10),
         role: body.role
     });

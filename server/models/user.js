@@ -9,7 +9,15 @@ let rolesValidos = {
 };
 
 let userSchema = new Schema({
-    name: {
+    username: {
+        type: String,
+        required: [true, "El nombre es necesario"]
+    },
+    nombre: {
+        type: String,
+        required: [true, "El nombre es necesario"]
+    },
+    apelllido: {
         type: String,
         required: [true, "El nombre es necesario"]
     },
@@ -22,7 +30,7 @@ let userSchema = new Schema({
         type: String,
         required: "La contraseña es obligatoria"
     },
-    img: {
+    telefono: {
         type: String,
         required: false
     },
@@ -32,10 +40,10 @@ let userSchema = new Schema({
         enum: rolesValidos
     },
     estado: {
-        type: Boolean,
-        default: true
+        type: String,
+        required: false
     },
-    google: {
+    id: {
         type: Boolean,
         default: false
     }
